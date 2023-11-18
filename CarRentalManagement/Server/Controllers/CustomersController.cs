@@ -23,37 +23,37 @@ namespace CarRentalManagement.Server.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        // GET: api/Makes
+        // GET: api/Customers
         [HttpGet]
-        public async Task<IActionResult> GetMakes()
+        public async Task<IActionResult> GetCustomers()
         {
-            var makes = await _unitOfWork.Makes.GetAll();
-            return Ok(makes);
+            var Customers = await _unitOfWork.Customers.GetAll();
+            return Ok(Customers);
         }
 
-        // GET: api/Makes/5
+        // GET: api/Customers/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetMake(int id)
+        public async Task<IActionResult> GetCustomer(int id)
         {
-            var make = await _unitOfWork.Makes.Get(q => q.Id == id);
-            if (make == null)
+            var Customer = await _unitOfWork.Customers.Get(q => q.Id == id);
+            if (Customer == null)
             {
                 return NotFound();
             }
-            return Ok(make);
+            return Ok(Customer);
         }
 
-        // PUT: api/Makes/5
+        // PUT: api/Customers/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutMake(int id, Make make)
+        public async Task<IActionResult> PutCustomer(int id, Customer Customer)
         {
-            if (id != make.Id)
+            if (id != Customer.Id)
             {
                 return BadRequest();
             }
 
-            _unitOfWork.Makes.Update(make);
+            _unitOfWork.Customers.Update(Customer);
 
             try
             {
@@ -61,7 +61,7 @@ namespace CarRentalManagement.Server.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!await MakeExists(id))
+                if (!await CustomerExists(id))
                 {
                     return NotFound();
                 }
@@ -74,35 +74,35 @@ namespace CarRentalManagement.Server.Controllers
             return NoContent();
         }
 
-        // POST: api/Makes
+        // POST: api/Customers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Make>> PostMake(Make make)
+        public async Task<ActionResult<Customer>> PostCustomer(Customer Customer)
         {
-            await _unitOfWork.Makes.Insert(make);
+            await _unitOfWork.Customers.Insert(Customer);
             await _unitOfWork.Save(HttpContext);
-            return CreatedAtAction("GetMake", new { id = make.Id }, make);
+            return CreatedAtAction("GetCustomer", new { id = Customer.Id }, Customer);
         }
 
-        // DELETE: api/Makes/5
+        // DELETE: api/Customers/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteMake(int id)
+        public async Task<IActionResult> DeleteCustomer(int id)
         {
-            var make = await _unitOfWork.Makes.Get(q => q.Id == id);
+            var Customer = await _unitOfWork.Customers.Get(q => q.Id == id);
 
-            if (make == null)
+            if (Customer == null)
             {
                 return NotFound();
             }
-            await _unitOfWork.Makes.Delete(id);
+            await _unitOfWork.Customers.Delete(id);
             await _unitOfWork.Save(HttpContext);
             return NoContent();
         }
 
-        private async Task<bool> MakeExists(int id)
+        private async Task<bool> CustomerExists(int id)
         {
-            var make = await _unitOfWork.Makes.Get(q => q.Id == id);
-            return make != null;
+            var Customer = await _unitOfWork.Customers.Get(q => q.Id == id);
+            return Customer != null;
         }
 
     }

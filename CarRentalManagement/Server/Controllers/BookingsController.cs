@@ -27,33 +27,33 @@ namespace CarRentalManagement.Server.Controllers
         [HttpGet]
         public async Task<IActionResult> GetBookings()
         {
-            var makes = await _unitOfWork.Makes.GetAll();
-            return Ok(makes);
+            var Bookings = await _unitOfWork.Bookings.GetAll(includes: q => q.Include(x =>x.Vehicle).Include(x => x.Customer));
+            return Ok(Bookings);
         }
 
-        // GET: api/Makes/5
+        // GET: api/Bookings/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetMake(int id)
+        public async Task<IActionResult> GetBooking(int id)
         {
-            var make = await _unitOfWork.Makes.Get(q => q.Id == id);
-            if (make == null)
+            var Booking = await _unitOfWork.Bookings.Get(q => q.Id == id);
+            if (Booking == null)
             {
                 return NotFound();
             }
-            return Ok(make);
+            return Ok(Booking);
         }
 
-        // PUT: api/Makes/5
+        // PUT: api/Bookings/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutMake(int id, Make make)
+        public async Task<IActionResult> PutBooking(int id, Booking Booking)
         {
-            if (id != make.Id)
+            if (id != Booking.Id)
             {
                 return BadRequest();
             }
 
-            _unitOfWork.Makes.Update(make);
+            _unitOfWork.Bookings.Update(Booking);
 
             try
             {
@@ -61,7 +61,7 @@ namespace CarRentalManagement.Server.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!await MakeExists(id))
+                if (!await BookingExists(id))
                 {
                     return NotFound();
                 }
@@ -74,35 +74,35 @@ namespace CarRentalManagement.Server.Controllers
             return NoContent();
         }
 
-        // POST: api/Makes
+        // POST: api/Bookings
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Make>> PostMake(Make make)
+        public async Task<ActionResult<Booking>> PostBooking(Booking Booking)
         {
-            await _unitOfWork.Makes.Insert(make);
+            await _unitOfWork.Bookings.Insert(Booking);
             await _unitOfWork.Save(HttpContext);
-            return CreatedAtAction("GetMake", new { id = make.Id }, make);
+            return CreatedAtAction("GetBooking", new { id = Booking.Id }, Booking);
         }
 
-        // DELETE: api/Makes/5
+        // DELETE: api/Bookings/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteMake(int id)
+        public async Task<IActionResult> DeleteBooking(int id)
         {
-            var make = await _unitOfWork.Makes.Get(q => q.Id == id);
+            var Booking = await _unitOfWork.Bookings.Get(q => q.Id == id);
 
-            if (make == null)
+            if (Booking == null)
             {
                 return NotFound();
             }
-            await _unitOfWork.Makes.Delete(id);
+            await _unitOfWork.Bookings.Delete(id);
             await _unitOfWork.Save(HttpContext);
             return NoContent();
         }
 
-        private async Task<bool> MakeExists(int id)
+        private async Task<bool> BookingExists(int id)
         {
-            var make = await _unitOfWork.Makes.Get(q => q.Id == id);
-            return make != null;
+            var Booking = await _unitOfWork.Bookings.Get(q => q.Id == id);
+            return Booking != null;
         }
 
     }

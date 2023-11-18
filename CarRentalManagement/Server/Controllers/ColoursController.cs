@@ -23,37 +23,37 @@ namespace CarRentalManagement.Server.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        // GET: api/Makes
+        // GET: api/Colours
         [HttpGet]
-        public async Task<IActionResult> GetMakes()
+        public async Task<IActionResult> GetColours()
         {
-            var makes = await _unitOfWork.Makes.GetAll();
-            return Ok(makes);
+            var Colours = await _unitOfWork.Colours.GetAll();
+            return Ok(Colours);
         }
 
-        // GET: api/Makes/5
+        // GET: api/Colours/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetMake(int id)
+        public async Task<IActionResult> GetColour(int id)
         {
-            var make = await _unitOfWork.Makes.Get(q => q.Id == id);
-            if (make == null)
+            var Colour = await _unitOfWork.Colours.Get(q => q.Id == id);
+            if (Colour == null)
             {
                 return NotFound();
             }
-            return Ok(make);
+            return Ok(Colour);
         }
 
-        // PUT: api/Makes/5
+        // PUT: api/Colours/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutMake(int id, Make make)
+        public async Task<IActionResult> PutColour(int id, Colour Colour)
         {
-            if (id != make.Id)
+            if (id != Colour.Id)
             {
                 return BadRequest();
             }
 
-            _unitOfWork.Makes.Update(make);
+            _unitOfWork.Colours.Update(Colour);
 
             try
             {
@@ -61,7 +61,7 @@ namespace CarRentalManagement.Server.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!await MakeExists(id))
+                if (!await ColourExists(id))
                 {
                     return NotFound();
                 }
@@ -74,35 +74,35 @@ namespace CarRentalManagement.Server.Controllers
             return NoContent();
         }
 
-        // POST: api/Makes
+        // POST: api/Colours
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Make>> PostMake(Make make)
+        public async Task<ActionResult<Colour>> PostColour(Colour Colour)
         {
-            await _unitOfWork.Makes.Insert(make);
+            await _unitOfWork.Colours.Insert(Colour);
             await _unitOfWork.Save(HttpContext);
-            return CreatedAtAction("GetMake", new { id = make.Id }, make);
+            return CreatedAtAction("GetColour", new { id = Colour.Id }, Colour);
         }
 
-        // DELETE: api/Makes/5
+        // DELETE: api/Colours/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteMake(int id)
+        public async Task<IActionResult> DeleteColour(int id)
         {
-            var make = await _unitOfWork.Makes.Get(q => q.Id == id);
+            var Colour = await _unitOfWork.Colours.Get(q => q.Id == id);
 
-            if (make == null)
+            if (Colour == null)
             {
                 return NotFound();
             }
-            await _unitOfWork.Makes.Delete(id);
+            await _unitOfWork.Colours.Delete(id);
             await _unitOfWork.Save(HttpContext);
             return NoContent();
         }
 
-        private async Task<bool> MakeExists(int id)
+        private async Task<bool> ColourExists(int id)
         {
-            var make = await _unitOfWork.Makes.Get(q => q.Id == id);
-            return make != null;
+            var Colour = await _unitOfWork.Colours.Get(q => q.Id == id);
+            return Colour != null;
         }
 
     }

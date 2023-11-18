@@ -10,7 +10,7 @@ namespace CarRentalManagement.Server.Data
 {
     public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>
     {
-        public ApplicationDbContext(
+        public ApplicationDbContext(    
             DbContextOptions options,
             IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
         {
@@ -26,14 +26,15 @@ namespace CarRentalManagement.Server.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
             builder.ApplyConfiguration(new ColourSeedConfiguration());
             builder.ApplyConfiguration(new MakeSeedConfiguration());
             builder.ApplyConfiguration(new ModelSeedConfiguration());
             builder.ApplyConfiguration(new RoleSeedConfiguration());
             builder.ApplyConfiguration(new UserSeedConfiguration());
             builder.ApplyConfiguration(new UserRoleSeedConfiguration());
-
         }
+
 
 
     }

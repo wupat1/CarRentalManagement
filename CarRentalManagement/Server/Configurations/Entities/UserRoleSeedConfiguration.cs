@@ -1,6 +1,11 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using CarRentalManagement.Shared.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 namespace CarRentalManagement.Server.Configurations.Entities
 {
     public class UserRoleSeedConfiguration :

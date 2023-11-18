@@ -23,37 +23,37 @@ namespace CarRentalManagement.Server.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        // GET: api/Makes
+        // GET: api/models
         [HttpGet]
-        public async Task<IActionResult> GetMakes()
+        public async Task<IActionResult> GetModels()
         {
-            var makes = await _unitOfWork.Makes.GetAll();
-            return Ok(makes);
+            var models = await _unitOfWork.Models.GetAll();
+            return Ok(models);
         }
 
-        // GET: api/Makes/5
+        // GET: api/models/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetMake(int id)
+        public async Task<IActionResult> Getmodel(int id)
         {
-            var make = await _unitOfWork.Makes.Get(q => q.Id == id);
-            if (make == null)
+            var model = await _unitOfWork.Models.Get(q => q.Id == id);
+            if (model == null)
             {
                 return NotFound();
             }
-            return Ok(make);
+            return Ok(model);
         }
 
-        // PUT: api/Makes/5
+        // PUT: api/models/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutMake(int id, Make make)
+        public async Task<IActionResult> Putmodel(int id, Model model)
         {
-            if (id != make.Id)
+            if (id != model.Id)
             {
                 return BadRequest();
             }
 
-            _unitOfWork.Makes.Update(make);
+            _unitOfWork.Models.Update(model);
 
             try
             {
@@ -61,7 +61,7 @@ namespace CarRentalManagement.Server.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!await MakeExists(id))
+                if (!await modelExists(id))
                 {
                     return NotFound();
                 }
@@ -74,35 +74,35 @@ namespace CarRentalManagement.Server.Controllers
             return NoContent();
         }
 
-        // POST: api/Makes
+        // POST: api/models
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Make>> PostMake(Make make)
+        public async Task<ActionResult<Model>> Postmodel(Model model)
         {
-            await _unitOfWork.Makes.Insert(make);
+            await _unitOfWork.Models.Insert(model);
             await _unitOfWork.Save(HttpContext);
-            return CreatedAtAction("GetMake", new { id = make.Id }, make);
+            return CreatedAtAction("Getmodel", new { id = model.Id }, model);
         }
 
-        // DELETE: api/Makes/5
+        // DELETE: api/models/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteMake(int id)
+        public async Task<IActionResult> Deletemodel(int id)
         {
-            var make = await _unitOfWork.Makes.Get(q => q.Id == id);
+            var model = await _unitOfWork.Models.Get(q => q.Id == id);
 
-            if (make == null)
+            if (model == null)
             {
                 return NotFound();
             }
-            await _unitOfWork.Makes.Delete(id);
+            await _unitOfWork.Models.Delete(id);
             await _unitOfWork.Save(HttpContext);
             return NoContent();
         }
 
-        private async Task<bool> MakeExists(int id)
+        private async Task<bool> modelExists(int id)
         {
-            var make = await _unitOfWork.Makes.Get(q => q.Id == id);
-            return make != null;
+            var model = await _unitOfWork.Models.Get(q => q.Id == id);
+            return model != null;
         }
 
     }
