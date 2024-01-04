@@ -31,7 +31,7 @@ namespace CarRentalManagement.Server.Controllers
             return Ok(makes);
         }
 
-        // GET: api/Makes/5
+        // GET: api/Make/idnumber 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetMake(int id)
         {
